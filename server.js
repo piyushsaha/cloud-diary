@@ -23,7 +23,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useF
     .catch(err => console.log(err))
 
 var isLoggedIn = process.env.isLoggedIn
-// var userData = null
+var userData = process.env.userData
 var user = process.env.user
 
 app.get('/login', (req, res) => {
