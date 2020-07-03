@@ -1,0 +1,184 @@
+.body-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.body-container .sidebar {
+  padding-top: 30px;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  min-width: 150px;
+  text-align: center;
+}
+
+.body-container .main {
+  padding-top: 30px;
+  -webkit-box-flex: 7;
+      -ms-flex: 7;
+          flex: 7;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  row-gap: 1em;
+}
+
+.body-container .main .grid-card {
+  border: #ACACAC 1px solid;
+  -webkit-box-shadow: #ACACAC 3px 3px 15px 0px;
+          box-shadow: #ACACAC 3px 3px 15px 0px;
+  padding: 20px;
+  margin: 0 auto;
+  width: 80%;
+  -webkit-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+}
+
+.body-container .main .grid-card:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-box-shadow: #ACACAC 10px 10px 15px 0px;
+          box-shadow: #ACACAC 10px 10px 15px 0px;
+}
+
+.body-container .main .grid-card .title {
+  margin-bottom: 10px;
+}
+
+.body-container .main .grid-card span.date-time {
+  color: #ACACAC;
+}
+
+.body-container .main .grid-card button.delete {
+  background: #f72929;
+}
+
+.createnote {
+  background: #4E6DD4;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.createnote:hover {
+  background: #2251ec;
+}
+
+.createnote:focus {
+  outline: none;
+}
+
+.new-form-modal {
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.95);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  pointer-events: all;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.card {
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -40%) scale(1);
+          transform: translate(-50%, -40%) scale(1);
+  z-index: 2;
+  background: white;
+  border: #ACACAC 0.5px solid;
+  padding: 30px 20px;
+  width: 400px;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+
+.card .close-container {
+  text-align: right;
+}
+
+.card .close-container span {
+  cursor: pointer;
+}
+
+.card textarea {
+  width: 100%;
+  height: 160px;
+  padding: 10px;
+  border-radius: 10px;
+  border: #ACACAC 1px solid;
+  resize: none;
+}
+
+.card textarea:focus {
+  outline: none;
+}
+
+.card button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 20px;
+  height: 30px;
+  padding-left: 10px;
+  border-radius: 10px;
+  border: #ACACAC 1px solid;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  font-size: 16px;
+  background: #4E6DD4;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  padding: 5px 5px;
+  border-radius: 10px;
+}
+
+button:hover {
+  background: #2251ec;
+}
+
+button:focus {
+  outline: none;
+}
+
+.new-form-modal.closed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card.closed {
+  -webkit-transform: translate(-50%, -50%) scale(0);
+          transform: translate(-50%, -50%) scale(0);
+}

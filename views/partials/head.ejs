@@ -1,0 +1,13 @@
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="icon" href="/assets/icon.ico">
+
+    <link rel="stylesheet" href="/stylesheets/navbar-all.css">
+
+    <% if (title === 'Dashboard') { %>
+        <link rel="stylesheet" href="/stylesheets/dashboard.css">
+    <% } else { %>
+        <link rel="stylesheet" href="/stylesheets/login-register.css">
+    <% } %> 
+</head>

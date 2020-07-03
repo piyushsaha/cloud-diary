@@ -1,0 +1,78 @@
+<html lang="en">
+
+<%- include('./partials/head.ejs') %>
+
+<body>
+    <%- include('./partials/navbar-loggedin.ejs') %>
+
+    <div class="body-container">
+        <div class="sidebar">
+            <h3>Welcome, <%= userData.name %></h3> <br />
+            <button class="createnote">Create New</button>
+        </div>
+        <div class="main">
+            <div class="grid-item">
+                <div class="grid-card">
+                    <h2 class="title">Title of the note</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia beatae voluptatibus veritatis.
+                        Debitis inventore, ducimus aut maiores deleniti molestias laudantium dolor dolorum mollitia
+                        voluptates minima explicabo corporis nobis ab id nisi natus cum qui reiciendis numquam quidem
+                        quasi dolore voluptas!</p>
+                    <br>
+                    <span class="date-time">24/05/2020 10:10 PM</span>
+                    <br><br>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+
+            <% userData.notes.forEach(note => { %>
+            <div class="grid-item">
+                <div class="grid-card">
+                    <h2 class="title"> <%= note.title  %> </h2>
+                    <p> <%= note.body %> </p>
+                    <br>
+                    <span class="date-time"><%= note.date %></span>
+                    <br><br>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+            <% }) %>
+
+
+        </div>
+
+        <div class="new-form-modal closed">
+            <!-- Blank div with 100% width and height to give the black .8 alpha to the modal background -->
+        </div>
+
+        <div class="card closed">
+            <div class="close-container"> <span class="close-x">X</span> </div>
+            <h2>Add new note</h2> <br>
+
+            <form action="/create-note" method="POST">
+                <label for="title">Title</label> <br>
+                <input type="text" id="title" name="title" placeholder="Enter title of the note" required> <br>
+                <label for="body">Body</label> <br>
+                <textarea id="body" name="body" placeholder="Enter the body of the note" maxlength="600" required></textarea><br>
+                <button type="submit">Add Note</button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    const logout = document.querySelector('.logout')
+    logout.addEventListener('click', e => {
+        fetch("/logout", { method: 'POST' })
+            .then(window.location.href = '/')
+            .catch(err => console.log(err))
+    })
+</script>
+
+<!-- JS to toggle the 'Create Note' modal -->
+<script src="/js/toggleCreateNoteModal.js"></script>
+
+</html>
