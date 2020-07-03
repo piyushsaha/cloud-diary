@@ -22,9 +22,9 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useF
     .then(result => app.listen(PORT, () => console.log(`Connected to DB\nStarted on port : ${PORT}`)))
     .catch(err => console.log(err))
 
-var isLoggedIn = false
+process.env.isLoggedIn = false
 // var userData = null
-var user = null
+process.env.user = null
 
 app.get('/login', (req, res) => {
     res.render('login', { title: "Login" })
