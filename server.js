@@ -23,7 +23,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useF
     .catch(err => console.log(err))
 
 var isLoggedIn = process.env.isLoggedIn
-var userData = process.env.userData
+// var userData = process.env.userData
 var user = process.env.user
 
 app.get('/login', (req, res) => {
@@ -39,7 +39,7 @@ app.get('/dashboard', (req, res) => {
         User.findOne({ username: user })
             .then(result => {
                 console.log(result)
-                userData = result
+                // userData = result
                 res.render('dashboard', { title: "Dashboard", userData: result })
             })
             .catch(err => console.log(err))
@@ -48,7 +48,7 @@ app.get('/dashboard', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    isLoggedIn && userData ?
+    isLoggedIn ?
         res.redirect('dashboard')
         :
         res.redirect('login')
@@ -109,7 +109,7 @@ app.post('/create-note', (req, res) => {
     User.findOneAndUpdate({ username: user }, { $push: { notes: req.body } }, { returnOriginal: false }) //finding the user and pushing the new note object into the array
         .then(response => {
             console.log(response)
-            userData = response
+            // userData = response
             res.redirect('/dashboard')
         })
         .catch(err => console.log(err))
