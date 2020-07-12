@@ -48,11 +48,15 @@ const ensureAuthenticated = (req, res, next) => {
 }
 
 app.get('/login', (req, res) => {
-    res.render('login', { title: "Login" })
+    res.render('login', { title: "Login - Cloud Diary" })
 })
 
 app.get('/register', (req, res) => {
-    res.render('register', { title: "Register" })
+    res.render('register', { title: "Register - Cloud Diary" })
+})
+
+app.get('/dashboard', ensureAuthenticated, (req, res) => {
+    res.render('dashboard', { title: "Dashboard  - Cloud Diary", userData: req.user })
 })
 
 app.get('/', ensureAuthenticated, (req, res) => {
@@ -60,9 +64,6 @@ app.get('/', ensureAuthenticated, (req, res) => {
     // console.log(req)
 })
 
-app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('dashboard', { title: "Dashboard", userData: req.user })
-})
 
 
 
