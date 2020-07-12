@@ -5,13 +5,14 @@
 <body>
     <%- include('./partials/navbar-loggedin.ejs') %>
 
+    <h3 style="color: red; text-align: center;">!! BUG ALERT : Please refresh the page after deleting any note !!</h3>
     <div class="body-container">
         <div class="sidebar">
             <h3>Welcome, <%= userData.name %></h3> <br />
             <button class="createnote">Create New</button>
         </div>
         <div class="main">
-            <div class="grid-item">
+            <!-- <div class="grid-item">
                 <div class="grid-card">
                     <h2 class="title">Title of the note</h2>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia beatae voluptatibus veritatis.
@@ -23,7 +24,7 @@
                     <br><br>
                     <button class="delete">Delete</button>
                 </div>
-            </div>
+            </div> -->
 
             <% userData.notes.forEach(note => { %>
             <div class="grid-item">
@@ -33,7 +34,7 @@
                     <br>
                     <span class="date-time"><%= note.date %></span>
                     <br><br>
-                    <button class="delete">Delete</button>
+                    <button class="delete" data-noteID="<%= note._id %>">Delete</button>
                 </div>
             </div>
             <% }) %>
@@ -53,7 +54,8 @@
                 <label for="title">Title</label> <br>
                 <input type="text" id="title" name="title" placeholder="Enter title of the note" required> <br>
                 <label for="body">Body</label> <br>
-                <textarea id="body" name="body" placeholder="Enter the body of the note" maxlength="600" required></textarea><br>
+                <textarea id="body" name="body" placeholder="Enter the body of the note" maxlength="600"
+                    required></textarea><br>
                 <button type="submit">Add Note</button>
             </form>
 
@@ -63,16 +65,26 @@
 
 
 </body>
+
 <script>
-    const logout = document.querySelector('.logout')
-    logout.addEventListener('click', e => {
-        fetch("/logout", { method: 'POST' })
-            .then(window.location.href = '/')
-            .catch(err => console.log(err))
-    })
+    const notes = document.querySelectorAll('.delete')
+    
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].addEventListener('click', e => {
+            // console.log(notes[i].getAttribute('data-noteID'))
+            var endPoint = '/delete/' + notes[i].getAttribute('data-noteID')
+            fetch(endPoint)
+                .then(window.location.reload())
+                .catch(err => console.log(err)) 
+        })
+    }
+
 </script>
 
 <!-- JS to toggle the 'Create Note' modal -->
 <script src="/js/toggleCreateNoteModal.js"></script>
+
+<!-- JS Script to log out  -->
+<script src="/js/logOut.js"></script>
 
 </html>
