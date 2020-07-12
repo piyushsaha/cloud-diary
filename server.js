@@ -56,7 +56,7 @@ app.get('/register', (req, res) => {
 })
 
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('dashboard', { title: "Dashboard  - Cloud Diary", userData: req.user })
+    res.render('dashboard', { title: "Dashboard - Cloud Diary", userData: req.user })
 })
 
 app.get('/', ensureAuthenticated, (req, res) => {
