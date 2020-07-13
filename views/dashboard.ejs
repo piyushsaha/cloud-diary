@@ -4,8 +4,7 @@
 
 <body>
     <%- include('./partials/navbar-loggedin.ejs') %>
-
-    <h3 style="color: red; text-align: center;">!! BUG ALERT : Please refresh the page after deleting any note !!</h3>
+    
     <div class="body-container">
         <div class="sidebar">
             <h3>Welcome, <%= userData.name %></h3> <br />
@@ -66,23 +65,11 @@
 
 </body>
 
-<script>
-    const notes = document.querySelectorAll('.delete')
-    
-    for (let i = 0; i < notes.length; i++) {
-        notes[i].addEventListener('click', e => {
-            // console.log(notes[i].getAttribute('data-noteID'))
-            var endPoint = '/delete/' + notes[i].getAttribute('data-noteID')
-            fetch(endPoint)
-                .then(window.location.reload())
-                .catch(err => console.log(err)) 
-        })
-    }
-
-</script>
-
 <!-- JS to toggle the 'Create Note' modal -->
 <script src="/js/toggleCreateNoteModal.js"></script>
+
+<!-- JS script to delete a note  -->
+<script src="/js/deleteNote.js"></script>
 
 <!-- JS Script to log out  -->
 <script src="/js/logOut.js"></script>

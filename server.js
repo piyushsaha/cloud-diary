@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
+const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const session = require('express-session')
@@ -12,7 +12,7 @@ const User = require('./models/userSchema')
 app.set('view engine', 'ejs')       //Setting the view engine to ejs
 app.set('views', 'views')           //Setting the views folder to 'views'           
 app.use(express.static('public'))   //Setting the 'public' folder as static folder
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))  //parsing the incoming objects into json
 
 
 
@@ -22,9 +22,9 @@ const DB_USER = process.env.DB_USER
 const DB_PASS = process.env.DB_PASS
 const DB_NAME = process.env.DB_NAME
 
+// DB connection
 const DB_URI = `mongodb+srv://${DB_USER}:${DB_PASS}@node-tutorial-wqr5i.gcp.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 
-// DB connection
 mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(result => app.listen(PORT, () => console.log(`Connected to DB\nStarted on port : ${PORT}`)))
     .catch(err => console.log(err))
@@ -39,7 +39,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//helper function to check if any user is logged in or not to protect some routes
+//helper function to check if any user is logged in or not to protect the private routes
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
@@ -61,7 +61,6 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
 
 app.get('/', ensureAuthenticated, (req, res) => {
     res.redirect('dashboard')
-    // console.log(req)
 })
 
 
