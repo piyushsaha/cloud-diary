@@ -49,6 +49,7 @@ const ensureAuthenticated = (req, res, next) => {
 
 app.get('/login', (req, res) => {
     res.render('login', { title: "Login - Cloud Diary" })
+    console.log(req)
 })
 
 app.get('/register', (req, res) => {
@@ -110,7 +111,7 @@ app.post('/login', passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/login'
 }), (req, res) => {
-    console.log(req.user)
+    // console.log(req.user)
 })
 
 app.get('/logout', (req, res) => {
@@ -139,7 +140,7 @@ app.post('/register', async (req, res) => {
     }
 })
 
-app.get('/delete/:noteID', async (req, res) => {
+app.post('/delete/:noteID', async (req, res) => {
     var noteID = req.params.noteID
     var userID = req.user._id
     await User.findByIdAndUpdate( userID , { $pull: { notes: { _id: noteID } } })

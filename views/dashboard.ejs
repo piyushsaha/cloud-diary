@@ -4,7 +4,7 @@
 
 <body>
     <%- include('./partials/navbar-loggedin.ejs') %>
-    
+
     <div class="body-container">
         <div class="sidebar">
             <h3>Welcome, <%= userData.name %></h3> <br />
@@ -24,6 +24,10 @@
                     <button class="delete">Delete</button>
                 </div>
             </div> -->
+
+            <% if(!userData.notes.length) { %>
+                <h3 style="text-align: right;" >No notes here yet! Create a note</h3>
+            <% } %> 
 
             <% userData.notes.forEach(note => { %>
             <div class="grid-item">
