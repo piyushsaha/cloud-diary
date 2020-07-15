@@ -48,16 +48,16 @@ const ensureAuthenticated = (req, res, next) => {
 }
 
 app.get('/login', (req, res) => {
-    res.render('login', { title: "Login - Cloud Diary" })
+    res.render('login', { title: "Cloud Diary - Login" })
     console.log(req)
 })
 
 app.get('/register', (req, res) => {
-    res.render('register', { title: "Register - Cloud Diary" })
+    res.render('register', { title: "Cloud Diary - Register" })
 })
 
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('dashboard', { title: "Dashboard - Cloud Diary", userData: req.user })
+    res.render('dashboard', { title: "Cloud Diary - Dashboard", userData: req.user })
 })
 
 app.get('/', ensureAuthenticated, (req, res) => {
@@ -76,13 +76,11 @@ passport.use(new localStrategy({ usernameField: 'username', passwordField: 'pass
             .then(user => {
                 if (!user) {
                     return done(null, false, { message: 'User Not Found' })
-                    // console.log('No user')
                 }
                 bcrypt.compare(password, user.password)
                     .then(match => {
                         if (!match) {
                             return done(null, false, { message: 'Incorrect Password' })
-                            // console.log(`Incorrect pass`)
                         }
                         if (match) {
                             return done(null, user)
@@ -97,7 +95,6 @@ passport.use(new localStrategy({ usernameField: 'username', passwordField: 'pass
 
 
 passport.serializeUser((user, done) => {
-    // console.log(user.id)
     done(null, user.id);
 })
 
@@ -120,7 +117,7 @@ app.get('/logout', (req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10) // 
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
         req.body.password = hashedPassword
         console.log(req.body.password)
         const user = new User(req.body)
@@ -140,7 +137,7 @@ app.post('/register', async (req, res) => {
     }
 })
 
-app.post('/delete/:noteID', async (req, res) => {
+app.get('/delete/:noteID', async (req, res) => {
     var noteID = req.params.noteID
     var userID = req.user._id
     await User.findByIdAndUpdate( userID , { $pull: { notes: { _id: noteID } } })
@@ -153,11 +150,8 @@ app.post('/delete/:noteID', async (req, res) => {
 
 app.post('/create-note', (req, res) => {
     req.body.date = new Date().toLocaleString() // setting the current date and time into date property
-    // console.log(req.body)
     User.findOneAndUpdate({ username: req.user.username }, { $push: { notes: req.body } }, { returnOriginal: false }) //finding the user and pushing the new note object into the array
         .then(response => {
-            // console.log(response)
-            // userData = response
             res.redirect('/dashboard')
         })
         .catch(err => console.log(err))

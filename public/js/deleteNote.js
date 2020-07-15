@@ -8,6 +8,6 @@ for (let i = 0; i < notes.length; i++) {
 }
 
 async function deleteNote(endPoint) {
-    await fetch(endPoint , { method: "POST" })
+    await fetch(endPoint , { method: "GET" })
     await window.location.reload()
 }
