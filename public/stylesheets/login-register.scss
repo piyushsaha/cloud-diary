@@ -1,6 +1,10 @@
 $primary: #4E6DD4;
 $darken: #2251ec;
 $grey: #ACACAC;
+$err: #FF0000;
+$err_bg : rgba(243, 46, 46, 0.2);
+$warn : #757203;
+$warn_bg : rgba(249, 249, 28, 0.2);
 
 .body-container {
     display: flex;
@@ -27,6 +31,22 @@ $grey: #ACACAC;
     }
 }
 
+p.error-msg {
+    font-size: smaller;
+    color: $err;
+    background-color: $err_bg;
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+p.warn-msg {
+    font-size: smaller;
+    color: $warn;
+    background-color: $warn_bg;
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 10px;
+}
 form {
     margin: 10px 0;
     label {

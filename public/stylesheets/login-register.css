@@ -36,6 +36,24 @@
   height: 120px;
 }
 
+p.error-msg {
+  font-size: smaller;
+  color: #FF0000;
+  background-color: rgba(243, 46, 46, 0.2);
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 10px;
+}
+
+p.warn-msg {
+  font-size: smaller;
+  color: #757203;
+  background-color: rgba(249, 249, 28, 0.2);
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 10px;
+}
+
 form {
   margin: 10px 0;
 }

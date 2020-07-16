@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const session = require('express-session')
+const flash = require('express-flash')
 const User = require('./models/userSchema')
 
 
@@ -31,25 +32,26 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useF
 
 
 //middlewares
+
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+}))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 //helper function to check if any user is logged in or not to protect the private routes
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
-        return next();
+        return next()
     }
     res.redirect('/login')
 }
 
 app.get('/login', (req, res) => {
     res.render('login', { title: "Cloud Diary - Login" })
-    console.log(req)
 })
 
 app.get('/register', (req, res) => {
@@ -66,8 +68,6 @@ app.get('/', ensureAuthenticated, (req, res) => {
 
 
 
-
-
 // Local Strategy Authentication (Using Passport.js)
 const localStrategy = require('passport-local').Strategy
 passport.use(new localStrategy({ usernameField: 'username', passwordField: 'password' },
@@ -75,12 +75,12 @@ passport.use(new localStrategy({ usernameField: 'username', passwordField: 'pass
         User.findOne({ username: username })
             .then(user => {
                 if (!user) {
-                    return done(null, false, { message: 'User Not Found' })
+                    return done(null, false, { message: 'No user with that username' })
                 }
                 bcrypt.compare(password, user.password)
                     .then(match => {
                         if (!match) {
-                            return done(null, false, { message: 'Incorrect Password' })
+                            return done(null, false, { message: 'Incorrect Password'})
                         }
                         if (match) {
                             return done(null, user)
@@ -92,12 +92,9 @@ passport.use(new localStrategy({ usernameField: 'username', passwordField: 'pass
 
     }))
 
-
-
 passport.serializeUser((user, done) => {
     done(null, user.id);
 })
-
 passport.deserializeUser((id, done) => {
     User.findById(id, function (err, user) {
         done(err, user)
@@ -106,10 +103,9 @@ passport.deserializeUser((id, done) => {
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/dashboard',
-    failureRedirect: '/login'
-}), (req, res) => {
-    // console.log(req.user)
-})
+    failureRedirect: '/login',
+    failureFlash: true
+}))
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => res.redirect('/'))
@@ -117,14 +113,18 @@ app.get('/logout', (req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        req.body.password = hashedPassword
-        console.log(req.body.password)
-        const user = new User(req.body)
-        User.findOne({ username: req.body.username })
+        const { name, username, password } = req.body
+        const hashedPassword = await bcrypt.hash(password, 10)
+        const user = new User({
+            name,
+            username,
+            password : hashedPassword
+        })
+        User.findOne({ username })
             .then(result => {
                 if (result) {
-                    console.log('Username already taken!')
+                    req.flash('error', 'Username already taken')
+                    req.flash('name', name)     //sending the entered name as a flash message to the page
                     res.redirect('register')
                 } else {
                     user.save()

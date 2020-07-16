@@ -5,12 +5,17 @@
 <body>
     <%- include('./partials/navbar-loggedout') %>
 
+
     <div class="body-container">
         <div class="card">
             <div class="img-container">
                 <img src="/assets/user-icon.svg" alt="" class="user-icon">
                 <h2>Login</h2>
             </div>
+            <% if(messages.error) { %>
+                <%= messages.name %>
+                <p class="error-msg"> <%= messages.error %> </p>
+            <% } %>
             <form action="/login" method="post">
                 <label for="username">Username</label>
                 <br />
