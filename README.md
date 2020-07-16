@@ -12,6 +12,10 @@ CloudDiary is a simple and user-friendly node based web-app where users can regi
 * express-session
 * express-flash
 
+## Live Deployment
+
+https://diary-on-cloud.herokuapp.com/
+
 ## Demo
 
 ![Login Page](/readme-assets/login-page.png)
