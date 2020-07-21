@@ -4,6 +4,7 @@ CloudDiary is a simple and user-friendly node based web-app where users can regi
 
 ## Tools/Libraries/Modules Used
 
+* Node.js
 * Express
 * MongoDB
 * EJS
