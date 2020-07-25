@@ -1,9 +1,9 @@
 <html lang="en">
 
-    <%- include('./partials/head.ejs') %>
+<%- include('./partials/head.ejs') %>
 
 <body>
-    <%- include('./partials/navbar-loggedout') %> 
+    <%- include('./partials/navbar-loggedout') %>
 
     <div class="body-container">
         <div class="card">
@@ -14,10 +14,11 @@
             <% if(messages.error) { %>
                 <p class="warn-msg"> <%= messages.error %> </p>
             <% } %>
-            <form action="/register" method="post">
+            <form action="/register" method="POST">
                 <label for="name">Name</label>
                 <br />
-                <input type="text" name="name" id="name" placeholder="Enter your name" value="<%= messages.name ? messages.name : "" %>" required />
+                <input type="text" name="name" id="name" placeholder="Enter your name"
+                    value="<%= messages.name ? messages.name : "" %>" required />
                 <br />
                 <label for="username">Username</label>
                 <br />
